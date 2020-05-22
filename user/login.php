@@ -61,6 +61,10 @@
 		echo json_encode($auth_data);
 	}
 	
+	if($_SERVER["REQUEST_METHOD"] == "GET") {
+		echo json_encode(array("message" => "Not yet implemented"));
+	}
+	
 	function check_AuthFieldsAvailable($credentials) {
 		foreach ($credentials as $cred) {
 			if (!isset($_POST[$cred])) {

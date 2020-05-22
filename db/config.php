@@ -2,7 +2,7 @@
 trait Database {
 	private $db_user = "root";
 	private $db_pwd  = "";
-	private $db_name = "useraccounts";
+	private $db_name = "node_reposit";
 	public $db;
 	
 	public function __construct() {
