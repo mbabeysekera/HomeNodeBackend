@@ -52,32 +52,41 @@
 			$auth_result = $auth->validate_Token();
 			
 			if (count($auth_result) == 1) {
-				$node_get["valid"] = true;
-				$node->set_UserId($_GET["user_id"]);
-				$node_result = $node->get_NodeData();
-				if (count($node_result) == 1) {
-					extract($node_result[0]);
-					$user_data = array(
-						"outdoor"		=> $outdoor,
-						"livingroom" 	=> $livingroom,
-						"kitchen"		=> $kitchen,
-						"garage" 		=> $garage,
-						"bedroom"		=> $bedroom,
-						"bathroom" 		=> $bathroom,
-						"temperature" 	=> $temperature
-					);
-					$node_get["user_data"] = $user_data;
+				if (!isset($_GET["ses"])) {
+					$node_get["valid"] = true;
+					$node->set_UserId($_GET["user_id"]);
+					$node_result = $node->get_NodeData();
+					if (count($node_result) == 1) {
+						extract($node_result[0]);
+						$user_data = array(
+							"outdoor"		=> $outdoor,
+							"livingroom" 	=> $livingroom,
+							"kitchen"		=> $kitchen,
+							"garage" 		=> $garage,
+							"bedroom"		=> $bedroom,
+							"bathroom" 		=> $bathroom,
+							"temperature" 	=> $temperature
+						);
+						$node_get["user_data"] = $user_data;
+					} else {
+						$node_get["user_data"] = array("user" => "Not available");
+						$node_get["valid"] = true;
+					}
 				} else {
-					$node_get["error"] = "No data available";
+					$node_get["user_data"] = array("user_id" => $auth_result[0]["user_id"]);
+					$node_get["valid"] = true;
 				}
-				
 			} else {
-				$node_get["user_data"] = "Unauthorized";
+				http_response_code(401);
+				$node_get["user_data"] = array("request" => "Unauthorized");
 				$node_get["valid"] = false;
 				$node_get["error"] = "Access Denied";
 			}
 		} else {
-			$node_get["rejected"] = "Wrong Request!";
+			http_response_code(404);
+			$node_get["user_data"] = array("request" => "rejected");
+			$node_get["valid"] = false;
+			$node_get["error"] = "Access Denied";
 		}
 		echo json_encode($node_get);
 	}

@@ -42,21 +42,25 @@
 							"access_token"	=> $access_token
 						);
 						$auth_data["user_data"] = $user_data;
+						http_response_code(201);
 					} else {
 						$auth_data["user_data"] = "Unauthorized";
 						$auth_data["valid"] = false;
 						$auth_data["error"] = "Data not updated properly. Try again!";
+						http_response_code(401);
 					}
 				}
 			} else {
 				$auth_data["user_data"] = "Unauthorized";
 				$auth_data["valid"] = false;
 				$auth_data["error"] = "Invalid username or password!";
+				http_response_code(404);
 			} 
 		} else {
 			$auth_data["user_data"] = "Unauthorized";
 			$auth_data["valid"] = false;
 			$auth_data["error"] = "Insufficient details, missing parameter(s)!";
+			http_response_code(401);
 		}
 		echo json_encode($auth_data);
 	}
