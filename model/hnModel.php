@@ -90,9 +90,9 @@
 		
 		public function set_NodeData() {
 			$query = "UPDATE hn_device_data SET outdoor=?, livingroom=?, kitchen=?, 
-					garage=?, bedroom=?, bathroom=?, temperature=?, last_modified=? WHERE user_id=?";
+					garage=?, bedroom=?, bathroom=?, last_modified=? WHERE user_id=?";
 			$data = [$this->outdoor, $this->livingroom, $this->kitchen, $this->garage, $this->bedroom, 
-					$this->bathroom, $this->temperature, $this->last_modified, $this->user_id];
+					$this->bathroom, $this->last_modified, $this->user_id];
 			$is_NodeDataUpdated = $this->db_ServiceUpdate($query, $data);
 			if (!$is_NodeDataUpdated) {
 				return false;

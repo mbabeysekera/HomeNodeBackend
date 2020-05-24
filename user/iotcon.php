@@ -11,7 +11,7 @@
 <?php
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$hn_datafileds = array("user_id", "outdoor", "livingroom", "kitchen", 
-			"garage", "bedroom", "bathroom", "temperature", "access_token");
+			"garage", "bedroom", "bathroom", "access_token");
 		$node_post = array();
 		$node_post["user_data"] = array();
 		
@@ -25,18 +25,22 @@
 				$is_nodeUpdated = $node->set_NodeData();
 				
 				if ($is_nodeUpdated) {
+					http_response_code(201);
 					$user_data["update"] = "successful";
 				} else {
+					http_response_code(400);
 					$user_data["update"] = "error";
 				}
 				$node_post["user_data"] = $user_data;
 			} else {
+				http_response_code(401);
 				$node_post["user_data"] = "Unauthorized";
 				$node_post["valid"] = false;
 				$node_post["error"] = "Access Denied";
 			}
 			
 		}else {
+			http_response_code(404);
 			$node_post["rejected"] = "Wrong Request!";
 		}
 		echo json_encode($node_post);
@@ -69,6 +73,7 @@
 						);
 						$node_get["user_data"] = $user_data;
 					} else {
+						http_response_code(404);
 						$node_get["user_data"] = array("user" => "Not available");
 						$node_get["valid"] = true;
 					}
@@ -109,7 +114,6 @@
 		$node->set_Garage($_POST["garage"]);
 		$node->set_Bedroom($_POST["bedroom"]);
 		$node->set_Bathroom($_POST["bathroom"]);
-		$node->set_Temperature($_POST["temperature"]);
 		$node->set_LastModified(time());
 	}
 ?>
