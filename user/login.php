@@ -15,7 +15,7 @@
 		
 		if (check_AuthFieldsAvailable(array("username", "password"))){
 			$login->set_Username($_POST["username"]);
-			$login->set_Password($_POST["password"]);
+			$login->set_Password(sha1($_POST["password"]));
 			$result = $login->ckeck_UserCreds();
 			if (count($result) == 1) {
 				if ($result[0] == "db_err") {

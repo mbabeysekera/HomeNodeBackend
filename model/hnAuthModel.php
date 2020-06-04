@@ -40,7 +40,7 @@
 		
 		public function validate_Token() {
 			$query = "SELECT * FROM hn_user_auth WHERE user_id=? AND access_token=?";
-			return $this->db_ServiceSelect($query, [$this->user_id, $this->access_token]);
+			return $this->db_ServiceSelectParam($query, [$this->user_id, $this->access_token]);
 		}
 	}
 ?>

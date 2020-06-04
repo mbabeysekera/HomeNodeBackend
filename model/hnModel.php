@@ -85,7 +85,7 @@
 		
 		public function get_NodeData() {
 			$query = "SELECT * FROM hn_device_data WHERE user_id=?";
-			return $this->db_ServiceSelect($query, [$this->user_id]);
+			return $this->db_ServiceSelectParam($query, [$this->user_id]);
 		}
 		
 		public function set_NodeData() {
